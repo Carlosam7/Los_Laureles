@@ -20,27 +20,19 @@ function App() {
   );
   }
 
-  const response = async () => {
-    const { data } = (await supabase.from('room').select());
+  // const response = async () => {
+  //   const { data } = await supabase.rpc('consult_by_type', {'r_type':'Estandar'});
 
-    //Obtener los datos de la respuesta
-    if (data.error) {
-      console.error('Error fetching data:', data.error);
-      return [];
-    }
+  //   //Obtener los datos de la respuesta
+  //   if (data.error) {
+  //     console.error('Error fetching data:', data.error);
+  //     return [];
+  //   }
+  //   return data;
+  // }
+  // const data = response();
 
-    const rooms = data.map((room) => ({
-      id_room: room.id_room,
-      id_type: room.id_type,
-      capacity: room.capacity,
-      description: room.description,
-    }))
-
-    return rooms;
-  }
-  const data = response();
-
-  console.log(data);
+  // console.log(data);
   
 
 
