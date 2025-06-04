@@ -1,0 +1,154 @@
+.profile{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  position: relative;
+  height: 100dvh;
+  color: #222;
+}
+
+.profile header {
+  display: flex;
+  justify-content: end;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #fff;
+  padding: 1rem;
+  padding-inline: 2rem;
+}
+
+.profile main {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  text-align: center;
+  flex-grow: 1;
+  padding-bottom: 5rem;
+}
+
+.profile h1 {
+  font-size: xx-large;
+  margin-top: 10rem;
+  margin-bottom: 5rem;
+}
+
+.profile ul{
+  display: flex;
+  gap: 2rem;
+}
+
+.profile form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 900px;
+}
+
+.pf-input-section {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.pf-input-section article {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+}
+
+.pf-input-section label {
+  color: #ACACAC;
+}
+
+.profile input {
+  border: 2px solid #EFEFEF;
+  outline: none;
+  border-radius: 10px;
+  padding: .75rem;
+  transition: .3s ease;
+}
+
+.profile input::placeholder {
+  color: #ACACAC;
+}
+
+.profile input:focus {
+  border-color: #FFF6DD;
+}
+
+.profile form button {
+  background-color: #BF5A30;
+  color: #fff;
+  border-radius: 10px;
+  padding: .75rem;
+  max-width: max-content;
+  cursor: pointer;
+}
+
+.profile footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: #BF5A30;
+  color: #fff;
+  font-weight: 200;
+  font-size: small;
+  padding: 2rem;
+  gap: 1rem;
+}
+
+.profile footer section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.profile footer section ul{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.profile footer input {
+  padding: .25rem;
+  border-radius: 1rem;
+}
+.profile footer input::placeholder {
+  color: #fff;
+}
+
+.profile footer button {
+  margin-left: 0.5rem;
+  background-color: #fff;
+  color: #222;
+  border-radius: 1rem;
+  cursor: pointer;
+  padding: .5rem;
+}
+
+@media screen and (width <= 1010px) {
+  .profile footer img {
+    object-fit: contain;
+    width: 150px;
+    font-size: smaller;
+  }
+}
+
+@media screen and (width <= 570px) {
+  .pf-input-section {
+    flex-direction: column;
+  }
+  
+  .profile h1 {
+    padding-top: 20rem;
+  }
+}
