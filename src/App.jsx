@@ -4,6 +4,7 @@ import { Button } from 'primereact/button';
 import { useState } from 'react';
 import supabase from './utils/supabase';
 import { Login } from './pages/auth/Login';
+import { Home } from './pages/client/home';
 
 function App() {
   // const [color, setColor] = useState('warning');
@@ -35,11 +36,12 @@ function App() {
 
   // console.log(data);
   
+  
 
 
   return (
-    
-    <Login />
+    <Home />
+//    <Login />
     //   {/* <div className="min-h-screen flex items-center justify-center bg-gray-100">
     //   <Button onClick={() => {changeColor()}} label="Los Laureles" icon="pi pi-thumbs-up" className={`p-button-rounded p-button-${color}`} />
     // </div> */}

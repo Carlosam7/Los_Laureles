@@ -2,18 +2,21 @@ export const background = `flex
                             justify-center 
                             items-center 
                             w-full 
-                            h-screen 
+                            min-w-[400px]
+                            h-screen
                             bg-gray-200 
                             overflow-auto`;
                             
 export const containerLogin = `flex flex-col 
                                 items-center 
                                 justify-between 
-                                w-[300px] 
+                                w-[350px] 
                                 h-[450px] 
                                 bg-white 
                                 p-8 
-                                rounded-xl  
+                                rounded-xl
+                                md:w-[400px]
+                                md:h-[450px]
                                 lg:w-[450px] 
                                 lg:h-[500px] 
                                 lg:rounded-2xl`

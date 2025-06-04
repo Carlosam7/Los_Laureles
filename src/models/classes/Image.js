@@ -2,34 +2,26 @@ class Image {
 
     /**
      * 
-     * @param {String} idImage 
-     * @param {String} idRoom 
+     * @param {String} idType 
      * @param {String} url 
      */
 
-    constructor (idImage, idRoom, url) {
-        this.idImage    =   idImage;
-        this.idRoom     =   idRoom;
+    constructor (idType, url) {
+        this.idType     =   idType;
         this.url        =   url;
     }
 
     // Getters
-    get IdImage() {
-        return this.idImage;
-    }
-    get IdRoom() {
-        return this.idRoom;
+    get IdType() {
+        return this.idType;
     }
     get Url() {
         return this.url;
     }
 
     // Setters
-    set IdImage(idImage) {
-        this.idImage = idImage;
-    }
-    set IdRoom(idRoom) {
-        this.idRoom = idRoom;
+    set IdType(idType) {
+        this.idType = idType;
     }
     set Url(url) {
         this.url = url;

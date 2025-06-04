@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { activeButtonStyle, background, button, buttonContainer, buttonGroup, containerLogin, paragraph, sectionWelcome, title } from './stylesCss';
+import { handleGetRooms } from '../../controllers/services/handleGetRooms';
+import { handleGetTypesRooms } from '../../controllers/services/handleGetTypesRooms';
 
 export const Login = () => {
     const [activeButton, setActiveButton] = useState('signIn');
@@ -15,8 +17,12 @@ export const Login = () => {
 
     };
 
+    // console.log(handleGetRooms());
+
+    // console.log(handleGetTypesRooms())
+
     return (
-        <>
+        
             <div className= {`${background}`} >
                 <div className= {`${containerLogin}`}>
                     <section className= {`${sectionWelcome}`}>
@@ -61,7 +67,7 @@ export const Login = () => {
                     </h2>
                 </div>
             </div>
-        </>
+        
 
     );
 
