@@ -11,19 +11,17 @@ class Room {
         * @param {Array<Image>} images                    - Array of Image objects associated with the room
     */
 
-    constructor (idRoom, type, priceDay, capacity, description, available, images) {
+    constructor (idRoom, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images) {
         this.idRoom         =   idRoom;
         this.type           =   type; // This is not used in the base class, but can be used in subclasses
         this.priceDay       =   priceDay;
         this.capacity       =   capacity;
         this.description    =   description;
-        this.available      =   available;
+        this.size           =   size;
+        this.numberBathrooms =   numberBathrooms;
+        this.numberRooms    =   numberRooms;
+        this.numberBeds     =   numberBeds;
         this.images         =   images;
-
-        // Validations Object Image o lista vacía
-        if (!Array.isArray(images) || !images.every(image => image instanceof Image)) {
-            throw new Error("Images must be an array of Image instances");
-        }
 
 
         // Clase abstracta
@@ -48,9 +46,7 @@ class Room {
     get Description() {
         return this.description;
     }
-    get Available() {
-        return this.available;
-    }
+
     get Images() {
         return this.images;
     }
@@ -71,9 +67,6 @@ class Room {
     set Description(description) {
         this.description = description;
     }
-    set Available(available) {
-        this.available = available;
-    }
     set Images(images) {
         this.images = images;
     }
@@ -86,7 +79,6 @@ class Room {
         Price per Day: ${this.PriceDay}, 
         Capacity; ${this.Capacity}, 
         Description: ${this.Description}, 
-        Available: ${this.Available},
         Images: [${this.Images.map(image => image.toString()).join(', ')}]`
         );
     }
@@ -95,8 +87,8 @@ class Room {
 };
 
 class StandardRoom extends Room {
-    constructor(idRoom, priceDay, capacity, description, available=true, images=[]) {
-        super(idRoom, 'Standard', priceDay, capacity, description, available, images);
+    constructor(idRoom, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images=[]) {
+        super(idRoom, 'Standard', priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images);
     }
 
     // Getters
@@ -111,8 +103,8 @@ class StandardRoom extends Room {
 };
 
 class FamilyRoom extends Room {
-   constructor(idRoom, priceDay, capacity, description, available = true, images = []) {
-        super(idRoom, 'Family', priceDay, capacity, description, available, images);
+   constructor(idRoom, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images=[]) {
+        super(idRoom, 'Family', priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images);
     }
 
     // Getters
@@ -128,8 +120,8 @@ class FamilyRoom extends Room {
 };
 
 class PresidentialRoom extends Room {
-    constructor(idRoom, priceDay, capacity, description, available = true, images = []) {
-        super(idRoom, 'Presidential', priceDay, capacity, description, available, images);
+    constructor(idRoom, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images=[]) {
+        super(idRoom, 'Presidential', priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images);
     }
 
     // Getters
@@ -144,9 +136,9 @@ class PresidentialRoom extends Room {
 
 };
 
-class SuitRoyalRoom extends Room {
-   constructor(idRoom, priceDay, capacity, description, available = true, images = []) {
-        super(idRoom, 'Suit Royal', priceDay, capacity, description, available, images);
+class SuiteRoyalRoom extends Room {
+   constructor(idRoom, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images=[]) {
+        super(idRoom, 'Suite Royal', priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images);
     }
 
     // Getters
@@ -162,8 +154,8 @@ class SuitRoyalRoom extends Room {
 };
 
 class KingRoom extends Room {
-   constructor(idRoom, priceDay, capacity, description, available = true, images = []) {
-        super(idRoom, 'King', priceDay, capacity, description, available, images);
+   constructor(idRoom, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images=[]) {
+        super(idRoom, 'King', priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images);
     }
 
     // Getters
@@ -179,8 +171,8 @@ class KingRoom extends Room {
 };
 
 class QueenRoom extends Room {
-   constructor(idRoom, priceDay, capacity, description, available = true, images = []) {
-        super(idRoom, 'Queen', priceDay, capacity, description, available, images);
+   constructor(idRoom, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images=[]) {
+        super(idRoom, 'Queen', priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images);
     }
 
     // Getters
@@ -195,4 +187,4 @@ class QueenRoom extends Room {
 
 }
 
-export { Room, StandardRoom, FamilyRoom, PresidentialRoom, SuitRoyalRoom, KingRoom, QueenRoom };
+export { Room, StandardRoom, FamilyRoom, PresidentialRoom, SuiteRoyalRoom, KingRoom, QueenRoom };
