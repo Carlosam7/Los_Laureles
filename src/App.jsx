@@ -4,6 +4,8 @@ import { Page404 } from './pages/page404';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Profile } from './pages/client/profile';
+import {Reservation} from './pages/client/Reservation';
+
 
 function App() {
   const navigate = useNavigate()
@@ -25,7 +27,7 @@ function App() {
   return (
     <>
       <Routes>
-          <Route path='/login' element={<Login/>}/>
+          <Route path='/login' element={<Reservation/>}/>
           <Route path='/profile' element={<Profile/>}/>
           <Route path='*' element={<Page404/>}/>
       </Routes>
