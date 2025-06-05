@@ -2,7 +2,8 @@ import 'primeicons/primeicons.css';
 import { Gallery } from '../../components/molecules/Gallery';
 import { CardPanelReserve } from '../../components/molecules/CardPanelReserve';
 
-export const PageRoom = ({ start_date, end_date, price }) => {
+export const PageRoom = ({ numberBeds, numberBathrooms, numberRooms, images, start_date, end_date, price }) => {
+    
     return (
         <main className="flex flex-col items-center justify-start w-full bg-white min-w-[450px] p-5 md:p-0">
             <section className="flex flex-col items-start w-full">
@@ -43,17 +44,17 @@ export const PageRoom = ({ start_date, end_date, price }) => {
                                 <h4>3 huespedes</h4>
                             </li>
                             <li>
-                                <h4>Wifi</h4>
+                                <h4>Check in: 7:00AM</h4>
                             </li>
                             <li>
-                                <h4>Aire acondicionado</h4>
+                                <h4>Check out: 7:00PM</h4>
                             </li>
                         </ul>
                     </section>
                     <section className='flex flex-col items-start justify-start w-full mt-4 space-y-10'>
                         <div className='flex items-start justify-start mt-4 space-y-2'>
                             <div className='flex items-center justify-between space-x-4'>
-                                <i className='flex items-center justify-center p-4 pi pi-home w-[50px] h-[50px] bg-amber-200 rounded-full'/>
+                                <i className='flex items-center justify-center text-center p-4 pi pi-home w-[50px] h-[50px] bg-amber-200 rounded-full'/>
                                 <h2 className='text-[20px] font-medium space-x-2'>
                                     Everything you need in one room
                                     <p className='text-[14px] font-light'>Everything you need in one room</p>
@@ -62,35 +63,33 @@ export const PageRoom = ({ start_date, end_date, price }) => {
                         </div>
 
                         <div className='flex items-center justify-between space-x-4'>
-                            <i className='flex items-center justify-center p-4 pi pi-home w-[50px] h-[50px] bg-amber-200 rounded-full'/>
+                            <i className='flex items-center justify-center text-center p-4 pi pi-wifi w-[50px] h-[50px] bg-amber-200 rounded-full'/>
                             <h2 className='text-[20px] font-medium space-x-2'>
-                                Everything you need in one room
-                                <p className='text-[14px] font-light'>Everything you need in one room</p>
+                                WI- FI
+                                <p className='text-[14px] font-light'>Convertura en zona del hotel y playa.</p>
 
                             </h2>     
                         </div>
                         
                         <div className='flex items-center justify-between space-x-4'>
-                            <i className='flex items-center justify-center p-4 pi pi-home w-[50px] h-[50px] bg-amber-200 rounded-full'/>
+                            <i className='flex items-center text-center justify-center p-4 pi pi-heart w-[50px] h-[50px] bg-amber-200 rounded-full'/>
                             <h2 className='text-[20px] font-medium space-x-2'>
-                                Everything you need in one room
-                                <p className='text-[14px] font-light'>Everything you need in one room</p>
+                                Mantente en forma con nuestro gimnasio
+                                <p className='text-[14px] font-light'>Todo lo que necesitas para cuidar de tu salud</p>
 
                             </h2>     
                         </div>
                         <div className='flex items-center justify-between space-x-4'>
-                            <i className='flex items-center justify-center p-4 pi pi-home w-[50px] h-[50px] bg-amber-200 rounded-full'/>
+                            <i className='flex items-center justify-center text-center p-4 pi pi-asterisk w-[50px] h-[50px] bg-amber-200 rounded-full'/>
                             <h2 className='text-[20px] font-medium space-x-2'>
-                                Everything you need in one room
-                                <p className='text-[14px] font-light'>Everything you need in one room</p>
-
+                                Tu gastronomía favorita a una puerta
+                                <p className='text-[14px] font-light'>Más de 10 restaurantes con las mejores gastronomías del mundo</p>
                             </h2>     
                         </div>
                     </section>
                 </article>
             
-                <CardPanelReserve endDate={new Date} startDate={new Date} price={245000}/>
-
+                <CardPanelReserve endDate={new Date(2025, 6, 9)} startDate={new Date(2025, 6, 7)} price={245000}/>
             </section>
         </main>
     )
