@@ -1,10 +1,8 @@
 import 'primeicons/primeicons.css';
-
-
 import { DropDown } from './DropDown';
         
-
 export const NavBar = () => {
+
     return (
         <nav className="flex items-center justify-between w-full h-full">
             <div className="text-xl font-bold text-blue-600">Aquí va el logo</div>

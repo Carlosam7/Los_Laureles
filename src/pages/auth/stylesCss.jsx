@@ -2,21 +2,18 @@ export const background = `flex
                             justify-center 
                             items-center 
                             w-full 
-                            min-w-[400px]
-                            h-screen
+                            h-screen 
                             bg-gray-200 
                             overflow-auto`;
                             
 export const containerLogin = `flex flex-col 
                                 items-center 
                                 justify-between 
-                                w-[350px] 
-                                h-[450px] 
+                                w-[500px] 
+                                h-[600px] 
                                 bg-white 
                                 p-8 
-                                rounded-xl
-                                md:w-[400px]
-                                md:h-[450px]
+                                rounded-2xl  
                                 lg:w-[450px] 
                                 lg:h-[500px] 
                                 lg:rounded-2xl`
@@ -30,10 +27,12 @@ export const sectionWelcome = `flex flex-col
                                 
 export const title = `text-2xl 
                         font-bold 
-                        text-gray-800`
+                        text-gray-800
+                        text-center`
 
 export const paragraph = `text-gray-600 
-                            text-[12px] `
+                            text-[12px]
+                            text-center`
 
 export const buttonContainer = `flex flex-col 
                                 w-full 

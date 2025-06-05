@@ -41,7 +41,7 @@ export const Carrousel = () => {
                         onChange={(e) => setSelectedCities(e.value)} 
                         options={cities} 
                         optionLabel="name" 
-                        maxSelectedLabels={3} inputIn='types' className="w-full"  placeholder="Elige tu tipo"
+                        maxSelectedLabels={1} inputIn='types' className="w-full"  placeholder="Elige tu tipo"
                     />
 
                     <button className="flex items-center justify-center md:justify-between w-full px-4 py-3 text-black bg-[#FDC800] rounded-md md:w-[40%]">
