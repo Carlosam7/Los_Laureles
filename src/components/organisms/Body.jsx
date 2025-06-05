@@ -107,6 +107,8 @@ export const Body = () => {
                         rooms.map((room, index) => (
                             <CardRoom
                                 key={index}
+                                id={room.idRoom}
+                                idType={room.idType}
                                 type={room.type}
                                 price={room.priceDay}
                                 capacity={room.capacity}

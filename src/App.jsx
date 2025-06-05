@@ -6,6 +6,7 @@ import { useContext, useEffect } from 'react';
 import { Profile } from './pages/client/profile';
 import { Home } from './pages/client/home';
 import { AuthContext } from './context/AuthContext';
+import { PageRoom } from './pages/client/PageRoom';
 
 function App() {
   const navigate = useNavigate()
@@ -19,7 +20,7 @@ function App() {
 
         // check user role
         const getUserRole = async () => {
-          const { data, error } = await supabase.from('user').select('role').eq('code', auth.user.id)
+          const { data, error } = await supabase.from('user').select('role').eq('code', _session.user.id)
 
           if (error) {
             console.error('Error fetching user role:', error)
@@ -28,9 +29,9 @@ function App() {
 
           const role = data?.[0]?.role
           console.log('User role:', role)
-          if (role === 'client') {
+          if (role === 'client' && location.pathname === '/login') {
             navigate('/')
-          } else if (role === 'admin') {
+          } else if (role === 'admin' && location.pathname === '/admin') {
             navigate('/')
           }
         }
@@ -46,6 +47,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='*' element={<Page404 />} />
+        <Route path='/room/:idType' element={<PageRoom />}></Route>
       </Routes>
     </>
   )
