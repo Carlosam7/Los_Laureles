@@ -1,21 +1,26 @@
 import { Calendar } from 'primereact/calendar';
 import { FloatLabel } from 'primereact/floatlabel';
 import { useEffect, useState } from 'react';
+import { createReserve } from '../../controllers/services/createReserveClient';
 
 export const CardPanelReserve = ({ startDate, endDate, price }) => {
     const [startD, setStartD] = useState(startDate);
     const [endD, setEndD] = useState(endDate)
-    const today = new Date();
-    const days = (endDate - startDate) / (1000 * 60 * 60 * 24);
+    const [days, setDays] = useState(0);
 
+    const parsearDate = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`
+    }
     useEffect(() => {
-        const days = (endDate - startDate) / (1000 * 60 * 60 * 24)
-    }, [])
-    
-    console.log(days)
+        const days = (endD - startD) / (1000 * 60 * 60 * 24)
+        setDays(days)
+    }, [startD, endD])
 
     return(
-        <div className='w-[350px] h-[450px] md:w-[450px] md:h-[500px] shadow-[0_4px_30px_rgba(0,0,0,0.1)] rounded-2xl bg-white flex items-center justify-center'>
+        <main className='w-[350px] h-[450px] md:w-[450px] md:h-[500px] shadow-[0_4px_30px_rgba(0,0,0,0.1)] rounded-2xl bg-white flex items-center justify-center'>
             <section className='flex flex-col items-start w-full h-full p-10 bg-white rounded-2xl space-y-10'>
                 <div className='flex items-center justify-between w-full'>
                     <h2 className='flex items-center text-[32px] font-bold space-x-2'>
@@ -25,12 +30,15 @@ export const CardPanelReserve = ({ startDate, endDate, price }) => {
                         </p>
                     </h2>
                 </div>
-                <container className='flex flex-col items-center justify-between w-full h-full'>
+                <section className='flex flex-col items-center justify-between w-full h-full'>
                     <section className="card grid grid-cols-2 w-full justify-evenly gap-4">
                         <FloatLabel className='w-full h-[60px]'>
 
                             <Calendar inputId="startDay" 
-                                value={startD} onChange={(e) => setStartD(e.value)}
+                                value={startD} 
+                                onChange={(e) => 
+                                    setStartD(e.value)
+                                }
                                 
                                 className='w-full h-full' />
                             <label htmlFor="startDay">Fecha de inicio</label>
@@ -49,13 +57,16 @@ export const CardPanelReserve = ({ startDate, endDate, price }) => {
                                 Total
                             </span>
                             <span className='flex justify-end w-[50%] right-0 text-[20px] font-medium text-gray-700'>
-                                $ {days * price}
+                                $ {(days < 0) ? 'NaN' : days * price}
                             </span>
                         </div>
                     
                     </section>
 
-                    <button className='w-full h-[60px] bg-amber-400 rounded-lg text-black font-bold hover:bg-amber-500 transition-all duration-300'>
+                    <button onClick={() =>
+                        createReserve('1', parsearDate(startD), parsearDate(endD))
+                    } 
+                    className='w-full h-[60px] bg-amber-400 rounded-lg text-black font-bold hover:bg-amber-500 transition-all duration-300'>
                         Reservar
                     </button>
 
@@ -67,11 +78,8 @@ export const CardPanelReserve = ({ startDate, endDate, price }) => {
                             Ver términos y condiciones del propietario aquí
                         </span>
                     </section>
-
-                </container>
-                
-                
+                </section>
             </section>
-        </div>
+        </main>
     );
 }

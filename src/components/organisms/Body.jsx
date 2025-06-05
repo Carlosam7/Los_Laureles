@@ -119,9 +119,6 @@ export const Body = () => {
                     )}
                 </section>
             </section>
-
-
-
         </main>
     )
 }
