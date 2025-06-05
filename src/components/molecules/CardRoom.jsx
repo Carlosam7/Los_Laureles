@@ -1,6 +1,6 @@
 export const CardRoom = ({ type, price, capacity, image }) => {
     return (
-        <container className={`relative w-full h-[300px] rounded-lg shadow-lg`}>
+        <div className={`relative w-full h-[300px] rounded-lg shadow-lg`}>
             <img src={image} alt="" className="absolute w-full h-full z-0 rounded-lg"/>
             
             <div className='flex items-end justify-center w-full h-full z-10'>
@@ -17,6 +17,6 @@ export const CardRoom = ({ type, price, capacity, image }) => {
                     </p>
                 </button>
             </div>
-        </container>
+        </div>
     )
 }
