@@ -9,13 +9,13 @@ export const CardPanelReserve = ({ startDate, endDate, price }) => {
     const days = (endDate - startDate) / (1000 * 60 * 60 * 24);
 
     useEffect(() => {
-        days = (endDate - startDate) / (1000 * 60 * 60 * 24)
+        const days = (endDate - startDate) / (1000 * 60 * 60 * 24)
     }, [])
     
     console.log(days)
 
     return(
-        <container className='w-[350px] h-[450px] md:w-[450px] md:h-[500px] shadow-[0_4px_30px_rgba(0,0,0,0.1)] rounded-2xl bg-white flex items-center justify-center'>
+        <div className='w-[350px] h-[450px] md:w-[450px] md:h-[500px] shadow-[0_4px_30px_rgba(0,0,0,0.1)] rounded-2xl bg-white flex items-center justify-center'>
             <section className='flex flex-col items-start w-full h-full p-10 bg-white rounded-2xl space-y-10'>
                 <div className='flex items-center justify-between w-full'>
                     <h2 className='flex items-center text-[32px] font-bold space-x-2'>
@@ -72,6 +72,6 @@ export const CardPanelReserve = ({ startDate, endDate, price }) => {
                 
                 
             </section>
-        </container>
+        </div>
     );
 }
