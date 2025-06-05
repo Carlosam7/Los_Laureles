@@ -14,7 +14,7 @@ export const Home = () => {
             <NavBar />
                 {/* <Header /> */}
                 {/* <Body /> */}
-                <PageRoom />
+                <PageRoom startDate={new Date(2025, 6, 7)} endDate={new Date(2025, 6, 9)} />
         </main>
     );
 }
