@@ -1,10 +1,18 @@
-export const CardRoom = ({ type, price, capacity, image }) => {
+import { useNavigate } from "react-router-dom"
+
+export const CardRoom = ({ id, idType, type, price, capacity, image }) => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/room/${idType}`);
+    };
+
     return (
-        <container className={`relative w-full h-[300px] rounded-lg shadow-lg`}>
+        <div className={`relative w-full h-[300px] rounded-lg shadow-lg`}>
             <img src={image} alt="" className="absolute w-full h-full z-0 rounded-lg"/>
             
             <div className='flex items-end justify-center w-full h-full z-10'>
-                <button className='flex flex-col items-start justify-center w-full h-[100px] p-2 bg-white/95 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer z-10'>
+                <button onClick={handleClick} className='flex flex-col items-start justify-center w-full h-[100px] p-2 bg-white/95 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer z-10'>
                     <h3>
                         <span className="text-[14px] font-bold text-gray-800"> {type} </span>
                         <br/>
@@ -17,6 +25,6 @@ export const CardRoom = ({ type, price, capacity, image }) => {
                     </p>
                 </button>
             </div>
-        </container>
+        </div>
     )
 }

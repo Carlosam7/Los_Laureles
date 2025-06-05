@@ -1,10 +1,16 @@
 import { useState } from "react";
+import supabase from "../../utils/supabase";
 
 export const DropDown = () => {
     const [isOpen, setItsOpen] = useState(false);
     const toggleDropdown = () => {
         setItsOpen(!isOpen);
     };
+
+    const signout = async () => {
+        await supabase.auth.signOut()
+    }
+
     return (
         
         <main className="relative flex items-center justify-center w-full h-full">        
@@ -39,6 +45,7 @@ export const DropDown = () => {
                     <hr className="my-2 border-slate-200" role="menuitem" />
                     <li
                         className="cursor-pointer text-slate-800 flex w-full text-sm items-center rounded-md p-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+                        onClick={() => signout()}
                     >
                     <p className="text-slate-800 font-medium ml-2">
                         Cerrar sesión

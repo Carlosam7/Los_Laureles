@@ -2,14 +2,21 @@ import '../../styles/profile_form.css'
 import 'primeicons/primeicons.css'
 import supabase from '../../utils/supabase'
 
-export function Profile () {
+export function Profile() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
   }
-  
+
   const logout = async () => {
     await supabase.auth.signOut()
+  }
+
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut()
+    if (error) {
+      console.error('Error signing out:', error)
+    }
   }
 
   return (
@@ -17,8 +24,8 @@ export function Profile () {
       <header>
         <nav>
           <ul>
-            <li><i className='pi pi-home' style={{fontSize: '2rem'}}></i></li>
-            <li onClick={() => logout()}><i className='pi pi-user' style={{fontSize: '2rem'}}></i></li>
+            <li onClick={() => signOut()}><i className='pi pi-home' style={{ fontSize: '2rem' }}></i></li>
+            <li onClick={() => logout()}><i className='pi pi-user' style={{ fontSize: '2rem' }}></i></li>
           </ul>
         </nav>
       </header>
@@ -26,33 +33,33 @@ export function Profile () {
         <h1>Registro de cliente</h1>
         <form onSubmit={handleSubmit}>
           <section className='pf-input-section'>
-            <article>  
+            <article>
               <label htmlFor="">Nombre</label>
               <input type="text" />
             </article>
-            <article>  
+            <article>
               <label htmlFor="">Apellido</label>
               <input type="text" />
             </article>
-            <article>  
+            <article>
               <label htmlFor="">Identificación</label>
               <input type="text" />
             </article>
-            <article>  
+            <article>
               <label htmlFor="">Teléfono de contacto</label>
               <input type="text" />
             </article>
-            <article>  
+            <article>
               <label htmlFor="">Correo electrónico</label>
               <input type="text" />
             </article>
           </section>
-          <button>Enviar</button>
+          <button>Envíar</button>
         </form>
       </main>
       <footer>
         <section>
-          <img src="public\los_laureles_brand-02.png" alt="" width={250}/>
+          <img src="public\los_laureles_brand-02.png" alt="" width={250} />
           <ul>
             <li><strong>Contacto</strong></li>
             <li>Puerto colombia</li>
@@ -68,11 +75,11 @@ export function Profile () {
           <ul>
             <li><strong>Los Laureles Newsletter</strong></li>
             <li>Suscríbete para recibir ofertas exclusivas y noticias.</li>
-            <li><input type="text" placeholder='Email address'/> <button>Suscribete</button></li>
+            <li><input type="text" placeholder='Email address' /> <button>Suscribete</button></li>
           </ul>
         </section>
-          <p>Consulta nuestros terminos y condiciones</p>
-          <p>© 2025 Hotel Resort Los Laureles. Todos los derechos reservados.</p>
+        <p>Consulta nuestros terminos y condiciones</p>
+        <p>© 2025 Hotel Resort Los Laureles. Todos los derechos reservados.</p>
       </footer>
     </div>
   )
