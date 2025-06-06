@@ -11,6 +11,7 @@ import { RoomForm } from './pages/admin/RoomForm';
 import { PageRoom } from './pages/client/PageRoom';
 import supabase from './utils/supabase';
 import { Reservation } from './pages/client/Reservation';
+import { MyReserves } from './pages/admin/ReservesManager';
 
 
 function App() {
@@ -25,26 +26,46 @@ function App() {
       else {
         // check user role
         const manageSign = async () => {
-          const { data, error } = await supabase.from('user').select('*').eq('code', _session.user.id)
+          const { data: userInfo, error: userError } = await supabase.from('user').select('*').eq('code', _session.user.id)
 
-          if (error) {
-            console.error('Error fetching user role:', error)
+          if (userError) {
+            console.error('Error fetching user role:', userError)
             return
           }
 
+          let userData
+          if (userInfo.role === 'client') {
+            const { data: guestPhone, error: guestError } = await supabase.from('guest').select('phone').eq('code_guest', _session.user.id).single()
+
+            if (guestError) {
+              console.error('Error fetching user role:', userError)
+              return
+            }
+
+            userData = {
+              _session,
+              user_info: {
+                ...userInfo[0],
+                phone: guestPhone.phone
+              }
+            }
+          }
+
           // save user data in context
-          const userData = {
+          userData = {
             _session,
-            user_info: data[0]
+            user_info: {
+              ...userInfo[0],
+            }
           }
           setAuth(userData)
 
-          const role = data?.[0]?.role
+          const role = userInfo?.[0]?.role
           console.log('User role:', role)
           if (role === 'client' && location.pathname === '/login') {
             navigate('/')
-          } else if (role === 'admin' && location.pathname === '/admin') {
-            navigate('/')
+          } else if (role === 'admin' && location.pathname === '/login') {
+            navigate('/admin')
 
           }
         }
@@ -70,6 +91,7 @@ function App() {
         <Route path='*' element={<Page404 />} />
         <Route path='/room/:idType' element={<PageRoom />}></Route>
         <Route path='/reservation' element={< Reservation />}></Route>
+        <Route path='/myreserves' element={< MyReserves />}></Route>
 
       </Routes>
     </>
