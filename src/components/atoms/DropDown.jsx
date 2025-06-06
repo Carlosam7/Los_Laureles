@@ -1,7 +1,9 @@
 import { useState } from "react";
 import supabase from "../../utils/supabase";
+
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+
 
 export const DropDown = () => {
     const [isOpen, setItsOpen] = useState(false);
@@ -27,6 +29,7 @@ export const DropDown = () => {
             },
             error: (err) => err.message
         })
+
     }
 
     return (

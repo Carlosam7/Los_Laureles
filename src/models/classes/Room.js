@@ -11,24 +11,24 @@ class Room {
         * @param {Array<Image>} images                    - Array of Image objects associated with the room
     */
 
-    constructor (idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images) {
-        this.idRoom         =   idRoom;
-        this.idType         =   idType;
-        this.type           =   type; // This is not used in the base class, but can be used in subclasses
-        this.priceDay       =   priceDay;
-        this.capacity       =   capacity;
-        this.description    =   description;
-        this.size           =   size;
-        this.numberBathrooms =   numberBathrooms;
-        this.numberRooms    =   numberRooms;
-        this.numberBeds     =   numberBeds;
-        this.images         =   images;
+    constructor(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images) {
+        this.idRoom = idRoom;
+        this.idType = idType;
+        this.type = type; // This is not used in the base class, but can be used in subclasses
+        this.priceDay = priceDay;
+        this.capacity = capacity;
+        this.description = description;
+        this.size = size;
+        this.numberBathrooms = numberBathrooms;
+        this.numberRooms = numberRooms;
+        this.numberBeds = numberBeds;
+        this.images = images;
 
 
         // Clase abstracta
-        if (this.constructor === Room) {
-            throw new Error("Cannot instantiate abstract class");
-        }
+        // if (this.constructor === Room) {
+        //     throw new Error("Cannot instantiate abstract class");
+        // }
     }
 
     //Getters
@@ -93,105 +93,105 @@ class Room {
 
 };
 
-class StandardRoom extends Room {
-    constructor(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images=[]) {
-        super(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images);
-    }
+// class StandardRoom extends Room {
+//     constructor(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images=[]) {
+//         super(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images);
+//     }
 
-    // Getters
-    get Type() {
-        return 'Estándar Tropical';
-    }
+//     // Getters
+//     get Type() {
+//         return 'Estándar Tropical';
+//     }
 
-    // Setters
-    set Type(type) {
-        throw new Error("Cannot change the type of a Standard Room");
-    }
-};
+//     // Setters
+//     set Type(type) {
+//         throw new Error("Cannot change the type of a Standard Room");
+//     }
+// };
 
-class FamilyRoom extends Room {
-   constructor(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images=[]) {
-        super(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images);
-    }
+// class FamilyRoom extends Room {
+//    constructor(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images=[]) {
+//         super(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images);
+//     }
 
-    // Getters
-    get Type() {
-        return 'Familiar Natural';
-    }
+//     // Getters
+//     get Type() {
+//         return 'Familiar Natural';
+//     }
 
-    // Setters
-    set Type(type) {
-        throw new Error("Cannot change the type of a Famlily Room");
-    }
+//     // Setters
+//     set Type(type) {
+//         throw new Error("Cannot change the type of a Famlily Room");
+//     }
 
-};
+// };
 
-class PresidentialRoom extends Room {
-    constructor(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images=[]) {
-        super(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images);
-    }
+// class PresidentialRoom extends Room {
+//     constructor(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images=[]) {
+//         super(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images);
+//     }
 
-    // Getters
-    get Type() {
-        return 'Presidencial Elegance';
-    }
+//     // Getters
+//     get Type() {
+//         return 'Presidencial Elegance';
+//     }
 
-    // Setters
-    set Type(type) {
-        throw new Error("Cannot change the type of a Presidential Room");
-    }
+//     // Setters
+//     set Type(type) {
+//         throw new Error("Cannot change the type of a Presidential Room");
+//     }
 
-};
+// };
 
-class SuiteRoyalRoom extends Room {
-   constructor(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images=[]) {
-        super(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images);
-    }
+// class SuiteRoyalRoom extends Room {
+//    constructor(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images=[]) {
+//         super(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images);
+//     }
 
-    // Getters
-    get Type() {
-        return 'Suit Royal Relax';
-    }
+//     // Getters
+//     get Type() {
+//         return 'Suite Royal Relax';
+//     }
 
-    // Setters
-    set Type(type) {
-        throw new Error("Cannot change the type of a Suit Royal Room");
-    }
+//     // Setters
+//     set Type(type) {
+//         throw new Error("Cannot change the type of a Suit Royal Room");
+//     }
 
-};
+// };
 
-class KingRoom extends Room {
-   constructor(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images=[]) {
-        super(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images);
-    }
+// class KingRoom extends Room {
+//    constructor(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images=[]) {
+//         super(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images);
+//     }
 
-    // Getters
-    get Type() {
-        return 'King Comfort';
-    }
+//     // Getters
+//     get Type() {
+//         return 'King Comfort';
+//     }
 
-    // Setters
-    set Type(type) {
-        throw new Error("Cannot change the type of a King Room");
-    }
+//     // Setters
+//     set Type(type) {
+//         throw new Error("Cannot change the type of a King Room");
+//     }
 
-};
+// };
 
-class QueenRoom extends Room {
-   constructor(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images=[]) {
-        super(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images);
-    }
+// class QueenRoom extends Room {
+//    constructor(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images=[]) {
+//         super(idRoom, idType, type, priceDay, capacity, description, size, numberBathrooms, numberRooms, numberBeds, images);
+//     }
 
-    // Getters
-    get Type() {
-        return 'Queen Serenity';
-    }
+//     // Getters
+//     get Type() {
+//         return 'Queen Serenity';
+//     }
 
-    // Setters
-    set Type(type) {
-        throw new Error("Cannot change the type of a PresidentialRoom");
-    }
+//     // Setters
+//     set Type(type) {
+//         throw new Error("Cannot change the type of a PresidentialRoom");
+//     }
 
-}
+// }
 
-export { Room, StandardRoom, FamilyRoom, PresidentialRoom, SuiteRoyalRoom, KingRoom, QueenRoom };
+export { Room };
