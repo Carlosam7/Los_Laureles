@@ -32,12 +32,6 @@ export function Profile() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    console.log(name, lastName, identification, phone)
-    if (!name || !lastName || !identification || !phone) {
-      alert('Por favor, completa todos los campos.')
-      return
-    }
-
     const userData = {
       name,
       last_name: lastName,
@@ -50,13 +44,24 @@ export function Profile() {
     console.log('User data to submit:', userData)
 
     const updateUser = async () => {
-      const { error } = await supabase.from('user').update({
+      console.log(name, lastName, identification, phone)
+      if (!name || !lastName || !identification || !phone) {
+        throw new Error('Por favor completa todos los campos')
+      }
+
+      if (identification && isNaN(identification)) throw new Error('Ingresa una identificación válida')
+
+      const { error: userError } = await supabase.from('user').update({
         name: userData.name,
         last_name: userData.last_name,
         identification: userData.identification,
       }).eq('code', userData.code)
 
-      if (error) throw new Error('Algo salió mal al actualizar los datos')
+      const { error: guestError } = await supabase.from('guest').update({
+        phone: phone
+      }).eq('code_guest', userData.code)
+
+      if (userError || guestError) throw new Error('Algo salió mal al actualizar los datos')
 
       return 'Datos actualizados correctamente'
     }

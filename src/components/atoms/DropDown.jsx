@@ -13,12 +13,19 @@ export const DropDown = () => {
 
     const signout = () => {
         const signOutPromise = async () => {
-            await supabase.auth.signOut()
+            const { error } = await supabase.auth.signOut()
+
+            if (error) throw new Error('Erroral cerrar sesión')
         }
+
         toast.promise(signOutPromise(), {
             loading: 'Cerrando sesión...',
-            success: '¡Regresa pronto!',
-            error: 'Algo salió mal...'
+            success: () => {
+                localStorage.removeItem("sb-auth-token");
+                sessionStorage.removeItem("sb-auth-token");
+                return '¡Regresa pronto!'
+            },
+            error: (err) => err.message
         })
     }
 
