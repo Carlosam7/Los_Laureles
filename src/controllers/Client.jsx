@@ -58,12 +58,14 @@ export const availability = async (type, sDate, eDate) => {
     }
 }
 
-export const createReserve = async (code, sDate, eDate, listRooms, type) => {
-    const av = await availability(type, sDate, eDate)
-
-    if (!av.available) throw new Error('No hay habitaciones disponibles para estas fechas.')
+export const createReserve = async (code, sDate, eDate, listRooms, type=null) => {
+    if (type != null){
+        const av = await availability(type, sDate, eDate)
+        if (!av.available) throw new Error('No hay habitaciones disponibles para estas fechas.')   
+    }
 
     try {
+        console.log('ESTA ES LA LISTA DE HABITACIONES: ', listRooms)
         await createReserveWithRooms(code, sDate, eDate, listRooms)
     } catch (error) {
         console.log('Error', error)

@@ -5,6 +5,7 @@ import { SearchBarComplete } from "../../components/molecules/SearchBarComplete"
 import { fetchFilterRooms } from "../../controllers/services/fetchFilterRooms";
 import { countAvailabilityDates } from "../../controllers/services/countAvailabilityDates";
 import { CardReserveIncrement } from "../../components/molecules/CardReserveIncrement";
+import { InvoiceReservation } from "../../components/molecules/InvoiceReservation";
 import { NavBar } from "../../components/atoms/NavBar";
 
 export const Reservation = () => {
@@ -13,6 +14,9 @@ export const Reservation = () => {
     const [availabilityMap, setAvailabilityMap] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    // Estado para cantidades seleccionadas por tipo de habitación
+    const [selectedRoomsQuantity, setSelectedRoomsQuantity] = useState({});
 
     // Leer parámetros URL
     const startDate = searchParams.get("start");
@@ -42,11 +46,12 @@ export const Reservation = () => {
         : [];
     const initialPriceRange = priceRange;
 
-    // Cuando cambien filtros URL, disparar fetch
+    // Cuando cambian filtros URL, disparar fetch
     useEffect(() => {
         const fetchRooms = async () => {
             if (!startDate || !endDate) {
                 setFilteredRooms([]);
+                setSelectedRoomsQuantity({});
                 return;
             }
 
@@ -65,6 +70,14 @@ export const Reservation = () => {
 
                 setAvailabilityMap(availabilityData);
                 setFilteredRooms(roomsFiltered);
+
+                // Inicializar cantidades a 0 para cada tipo filtrado
+                const quantitiesInit = {};
+                roomsFiltered.forEach(room => {
+                    quantitiesInit[room.type] = selectedRoomsQuantity[room.type] || 0;
+                });
+                setSelectedRoomsQuantity(quantitiesInit);
+
             } catch (error) {
                 setError("Error al cargar las habitaciones.");
                 console.error(error);
@@ -76,38 +89,39 @@ export const Reservation = () => {
         fetchRooms();
     }, [startDate, endDate, typesParam, priceRange]);
 
-    return (
-        <>
-            <main className="flex flex-col items-center justify-start w-full min-h-screen bg-white p-5 md:p-10 min-w-[450px] space-y-5">
-                <NavBar />
-                <SearchBarComplete
-                    initialDates={initialDates}
-                    initialSelectedCities={initialSelectedCities}
-                    initialPriceRange={initialPriceRange}
-                />
+    // Función para actualizar cantidad de un tipo específico
+    const updateQuantity = (type, quantity) => {
+        setSelectedRoomsQuantity(prev => ({
+            ...prev,
+            [type]: quantity
+        }));
+    };
 
-                <div className="mt-6 w-full max-w-[1400px] mx-auto px-4">
+    // Preparar datos para factura, solo con habitaciones disponibles y cantidades > 0
+    const selectedRoomsForInvoice = filteredRooms
+        .filter(room => (availabilityMap[room.type] ?? 0) > 0)
+        .map(room => ({
+            type: room.type,
+            price: room.price_day,
+            quantity: selectedRoomsQuantity[room.type] || 0
+        }));
+
+    return (
+        <main className="flex flex-col w-full min-h-scre    en bg-white p-5 md:p-10 min-w-[450px] space-y-5">
+            <NavBar/>
+            <SearchBarComplete
+                initialDates={initialDates}
+                initialSelectedCities={initialSelectedCities}
+                initialPriceRange={initialPriceRange}
+            />
+
+            <div className="flex flex-col md:flex-row items-start justify-between mt-4 mb-6 max-w-[1400px] mx-auto px-4 gap-8">
+
+                {/* Contenedor lista de habitaciones */}
+                <div className="flex-1">
                     {loading && (
                         <div className="flex flex-col items-center justify-center py-10">
-                            <svg
-                                className="animate-spin h-10 w-10 text-yellow-500 mb-4"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                            >
-                                <circle
-                                    className="opacity-25"
-                                    cx="12" cy="12" r="10"
-                                    stroke="currentColor"
-                                    strokeWidth="4"
-                                ></circle>
-                                <path
-                                    className="opacity-75"
-                                    fill="currentColor"
-                                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                                ></path>
-                            </svg>
-                            <p className="text-gray-700 font-semibold text-lg">Cargando habitaciones...</p>
+                            {/* Spinner y texto */}
                         </div>
                     )}
 
@@ -115,19 +129,7 @@ export const Reservation = () => {
 
                     {!loading && filteredRooms.length === 0 && (
                         <div className="flex flex-col items-center justify-center min-h-[300px] p-10 text-center">
-                            <svg
-                                className="h-12 w-12 mb-4 text-gray-700"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                strokeWidth={2}
-                            >
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" />
-                            </svg>
-                            <p style={{ color: '#1f2937', fontWeight: '600', fontSize: '1.125rem' }}>
-                                No hay habitaciones disponibles con el filtro.
-                            </p>
+                            {/* Mensaje no hay habitaciones */}
                         </div>
                     )}
 
@@ -142,18 +144,24 @@ export const Reservation = () => {
                                 image={room.image_url || ''}
                                 description={room.description}
                                 availability={availabilityMap[room.type] ?? 0}
+                                quantity={selectedRoomsQuantity[room.type] || 0}
+                                onQuantityChange={(qty) => updateQuantity(room.type, qty)}
                             />
                         ))
                     }
                 </div>
-            </main>
-        </>
+                {selectedRoomsForInvoice.some(room => room.quantity > 0) && (
+                    <div className="w-full md:w-96 sticky top-20">
+                        <InvoiceReservation
+                            initialDates = {initialDates}
+                            selectedRooms={selectedRoomsForInvoice}
+                            onConfirm={() => {
+                                console.log("Reserva confirmada:", selectedRoomsForInvoice);
+                            }}
+                        />
+                    </div>
+                )}
+            </div>
+        </main>
     );
 };
-
-
-
-
-
-
-

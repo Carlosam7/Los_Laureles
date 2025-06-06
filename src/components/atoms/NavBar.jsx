@@ -12,11 +12,10 @@ export const NavBar = () => {
     const home = () => {
         auth.user_info.role === 'admin' ? navigate('/admin') : navigate('/')
     }
-
     return (
         <>
             <nav className="flex items-center justify-between w-full h-full">
-                <div className="text-xl font-bold text-blue-600">Aquí va el logo</div>
+                <img className="h-[30px] text-xl font-bold" src='https://faowaewkokjiovwtbrbn.supabase.co/storage/v1/object/public/utils//los_laureles_brand-03.png' />
                 <ul className="flex space-x-2">
                     <li>
                         <button className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] p-2 rounded-full cursor-pointer transition-all duration-500" onClick={home}>

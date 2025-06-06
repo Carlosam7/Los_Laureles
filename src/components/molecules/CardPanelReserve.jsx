@@ -141,7 +141,7 @@ export const CardPanelReserve = ({ type, startDate, endDate, price }) => {
                         } else {
                             console.log('Reservando...')
                             toast.promise(createReserve(user.code, startD, endD, availables.slice(0, quantity), type), {
-                                loading: 'Rservando...',
+                                loading: 'Reservando...',
                                 success: 'Reserva realizada con exito',
                                 error: err => err.message
                             })
