@@ -7,6 +7,12 @@ export const handleGetTypesRooms = async (req, res) => {
         if (!data || data.length === 0) {
             return res.status(404).json({ error: 'No room types found' });
         }
+
+        // Corregir el tipo problemático antes del switch
+        let correctedType = room.type;
+        if (room.type === 'Suite Royal') {
+            correctedType = 'Suite Royal Relax';
+        }
         const roomTypes = data.map(room => {
             switch (room.type) {
                 case 'Estándar Tropical':

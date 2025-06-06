@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export const CardReserveIncrement = ({ name, price, capacity, image, description, availability,  }) => {
+export const CardReserveIncrement = ({ name, price, capacity, image, description, availability  }) => {
 
     const [quantity, setQuantity] = useState(0);
 
@@ -53,17 +53,6 @@ export const CardReserveIncrement = ({ name, price, capacity, image, description
                             <p className="text-gray-600 mb-4 leading-relaxed">
                                 {description}
                             </p>
-
-                            {/* Enlace de más detalles */}
-                            <button className="flex items-center gap-2 text-[#BF5A30] hover:text-orange-600 mb-6 cursor-pointer font-medium transition-colors">
-                                Más detalles
-                                {/* Icono de flecha usando SVG */}
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path d="M5 12h14" />
-                                    <path d="m12 5 7 7-7 7" />
-                                </svg>
-
-                            </button>
                         </div>
 
                     </div>

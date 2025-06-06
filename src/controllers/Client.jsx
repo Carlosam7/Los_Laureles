@@ -11,7 +11,9 @@ export const showRooms = async (req, res) => {
             const roomImages = images.filter(image => image.idType === room.idType);
             room.images = roomImages
         })
+
         return typeRooms;
+
     }catch (error) {
         console.error('Error fetching rooms or types:', error);
         throw new Error('Failed to fetch rooms or types');
@@ -19,11 +21,19 @@ export const showRooms = async (req, res) => {
 }
 
 export const getRoom = async (idType) => {
+
     const rooms = await showRooms();
     console.log('ID TIPO: ', idType);
-
     console.log('habitaciones: ', rooms)
+
     const r = rooms.find(room => room.idType == idType);
+        if (r) {
+        // Corregir sólo si el tipo es "Suite Royal"
+        if (r.type === "Suite Royal") {
+            r.type = "Suite Royal Relax";
+        }
+    }
     console.log(r)
     return r;
 };
+

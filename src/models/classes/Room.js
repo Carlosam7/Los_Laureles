@@ -150,7 +150,7 @@ class SuiteRoyalRoom extends Room {
 
     // Getters
     get Type() {
-        return 'Suit Royal Relax';
+        return 'Suite Royal Relax';
     }
 
     // Setters
