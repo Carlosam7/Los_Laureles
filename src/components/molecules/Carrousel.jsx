@@ -42,6 +42,7 @@ export const Carrousel = () => {
                         options={cities} 
                         optionLabel="name" 
                         maxSelectedLabels={1} inputId='types' className="w-full"  placeholder="Elige tu tipo"
+
                     />
 
                     <button className="flex items-center justify-center md:justify-between w-full px-4 py-3 text-black bg-[#FDC800] rounded-md md:w-[40%]">
