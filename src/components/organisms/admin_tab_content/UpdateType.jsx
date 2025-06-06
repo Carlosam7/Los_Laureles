@@ -102,7 +102,7 @@ export function UpdateType({ types, setTypes }) {
       </article>
       <article style={{ gridArea: 'name' }}>
         <label>Nombre</label>
-        <input type="text" placeholder="Standard - King - Queen" value={name} onChange={(e) => setName(e.target.value)} />
+        <input type="text" placeholder="Standard - King - Queen" value={name} onChange={(e) => setName(e.target.value)} disabled className="btn-disabled" />
       </article>
       <article style={{ gridArea: 'price' }}>
         <label>Precio/noche</label>

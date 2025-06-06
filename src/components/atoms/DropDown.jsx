@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import supabase from "../../utils/supabase";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export const DropDown = () => {
     const [isOpen, setItsOpen] = useState(false);
@@ -10,8 +11,15 @@ export const DropDown = () => {
 
     const navigate = useNavigate()
 
-    const signout = async () => {
-        await supabase.auth.signOut()
+    const signout = () => {
+        const signOutPromise = async () => {
+            await supabase.auth.signOut()
+        }
+        toast.promise(signOutPromise(), {
+            loading: 'Cerrando sesión...',
+            success: '¡Regresa pronto!',
+            error: 'Algo salió mal...'
+        })
     }
 
     return (
