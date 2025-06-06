@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import supabase from "../../utils/supabase";
 
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { AuthContext } from "../../context/AuthContext";
 
 
 export const DropDown = () => {
+    const { auth } = useContext(AuthContext)
     const [isOpen, setItsOpen] = useState(false);
     const toggleDropdown = () => {
         setItsOpen(!isOpen);
@@ -29,7 +31,10 @@ export const DropDown = () => {
             },
             error: (err) => err.message
         })
+    }
 
+    const reserveManager = () => {
+        auth.user_info.role === 'admin' ? navigate('/admin/rsm') : navigate('/myreserves')
     }
 
     return (
@@ -52,6 +57,7 @@ export const DropDown = () => {
                     </li>
                     <li
                         className="cursor-pointer text-slate-800 flex w-full text-sm items-center rounded-md p-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+                        onClick={reserveManager}
                     >
                         <p className="text-slate-800 font-medium ml-2">
                             Mis reservas

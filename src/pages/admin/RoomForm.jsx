@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { NavBar } from "../../components/atoms/NavBar";
 import '../../styles/room_manager.css';
 import { UpdateType } from "../../components/organisms/admin_tab_content/UpdateType";
@@ -8,10 +8,15 @@ import { AddRoom } from "../../components/organisms/admin_tab_content/AddRoom";
 import { DeleteRoom } from "../../components/organisms/admin_tab_content/DeleteRoom";
 import supabase from "../../utils/supabase";
 import { toast } from "sonner";
+import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export function RoomForm() {
+  const { auth } = useContext(AuthContext)
   const [activeTab, setActiveTab] = useState('Actualizar tipo');
   const [types, setTypes] = useState([]);
+
+  const navigate = useNavigate()
 
   const tabs = [
     'Actualizar tipo',
@@ -22,6 +27,11 @@ export function RoomForm() {
   ];
 
   useEffect(() => {
+    if (auth.user_info.role === 'client') {
+      navigate('/404')
+      return
+    }
+
     const fetchTypes = async () => {
       const tr_res = await supabase.from('type_room').select('*');
       if (tr_res.error) {

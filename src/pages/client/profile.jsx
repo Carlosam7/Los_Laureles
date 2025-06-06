@@ -22,10 +22,10 @@ export function Profile() {
 
   useEffect(() => {
     if (auth?.user_info) {
-      setName(auth.user_info.name || '')
-      setLastName(auth.user_info.last_name || '')
-      setIdentification(auth.user_info.identification || '')
-      setPhone(auth.user_info.phone || '')
+      setName(auth.user_info?.name || '')
+      setLastName(auth.user_info?.last_name || '')
+      setIdentification(auth.user_info?.identification || '')
+      setPhone(auth.user_info?.phone || '')
       setEmail(auth._session?.user?.email || '')
     }
   }, [auth])
@@ -87,7 +87,8 @@ export function Profile() {
             phone: userData.phone
           }
         }))
-        navigate('/')
+
+        auth.user_info.role === 'admin' ? navigate('/admin') : navigate('/')
         return msg
       },
       error: (err) => {
@@ -96,13 +97,6 @@ export function Profile() {
       }
     })
 
-  }
-
-  const signOut = async () => {
-    const { error } = await supabase.auth.signOut()
-    if (error) {
-      console.error('Error signing out:', error)
-    }
   }
 
   return (
