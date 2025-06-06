@@ -67,6 +67,7 @@ export const Carrousel = () => {
                         maxSelectedLabels={1}
                         className="w-full"
                         placeholder="Elige tu tipo"
+
                     />
 
                     <button
