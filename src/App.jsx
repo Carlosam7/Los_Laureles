@@ -8,6 +8,8 @@ import { Home } from './pages/client/home';
 import { AuthContext } from './context/AuthContext';
 import { Toaster } from 'sonner';
 import { RoomForm } from './pages/admin/RoomForm';
+import { PageRoom } from './pages/client/PageRoom';
+
 
 function App() {
   const navigate = useNavigate()
@@ -35,14 +37,13 @@ function App() {
           }
           setAuth(userData)
 
-          if (userData.user_info.role === 'client') {
-            if (userData.user_info.name) {
-              navigate('/')
-            } else {
-              navigate('/profile')
-            }
-          } else if (userData.user_info.role === 'admin') {
-            navigate('/admin')
+          const role = data?.[0]?.role
+          console.log('User role:', role)
+          if (role === 'client' && location.pathname === '/login') {
+            navigate('/')
+          } else if (role === 'admin' && location.pathname === '/admin') {
+            navigate('/')
+
           }
         }
         manageSign()
@@ -63,6 +64,7 @@ function App() {
         <Route path='/profile' element={<Profile />} />
         <Route path='/admin' element={<RoomForm />} />
         <Route path='*' element={<Page404 />} />
+        <Route path='/room/:idType' element={<PageRoom />}></Route>
       </Routes>
     </>
   )

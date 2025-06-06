@@ -7,6 +7,11 @@ export const CardPanelReserve = ({ startDate, endDate, price }) => {
     const [startD, setStartD] = useState(startDate);
     const [endD, setEndD] = useState(endDate)
     const [days, setDays] = useState(0);
+    const [quantity, setQuantity] = useState(0);
+
+    const updateQuantity = (change) => {
+        setQuantity(prev => Math.max(0, prev + change));
+    };
 
     const parsearDate = (date) => {
         const year = date.getFullYear();
@@ -59,6 +64,36 @@ export const CardPanelReserve = ({ startDate, endDate, price }) => {
                             <span className='flex justify-end w-[50%] right-0 text-[20px] font-medium text-gray-700'>
                                 $ {(days < 0) ? 'NaN' : days * price}
                             </span>
+                        </div>
+                        {/* Controles de cantidad */}
+                        <div className="flex col-span-2 justify-end items-center rounded-lg">
+
+                            <button
+                                className="w-7 h-7 rounded-full border-2 border-gray-300 flex items-center justify-center hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                onClick={() => updateQuantity(-1)}
+                                disabled={quantity === 0}
+                            >
+                                {/* Icono menos usando SVG */}
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M5 12h14" />
+                                </svg>
+                            </button>
+
+                            <span className="text-xl font-semibold w-12 text-center">
+                                {quantity}
+                            </span>
+
+                            <button
+                                className="w-7 h-7 rounded-full border-2 border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors"
+                                onClick={() => updateQuantity(1)}
+                                // disabled={quantity === availability} // Aquí puedes definir una variable o prop para la cantidad máxima disponible
+                            >
+                                {/* Icono más usando SVG */}
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M12 5v14" />
+                                    <path d="M5 12h14" />
+                                </svg>
+                            </button>
                         </div>
                     
                     </section>
