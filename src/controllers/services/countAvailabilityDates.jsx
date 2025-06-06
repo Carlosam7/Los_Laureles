@@ -1,6 +1,8 @@
 import supabase from '../../utils/supabase.js';
 
-export const countAvailabilityDates = async (startDate, endDate ) => {
+export const countAvailabilityDates = async (startDate, endDate) => {
+  if (!startDate || !endDate) return {};
+
   try {
     const { data, error } = await supabase.rpc('consult_all_available_counts', {
       s_date: startDate,
@@ -14,12 +16,10 @@ export const countAvailabilityDates = async (startDate, endDate ) => {
       availabilityMap[type] = available_count;
     });
 
-    console.log("Resultado de countAvailabilityDates:", availabilityMap); // 🧪
-
-    return availabilityMap; // ✅ NO envuelvas en { count: data }
+    return availabilityMap;
 
   } catch (err) {
-    console.error(err);
-    return {}; // para evitar crashes en errores
+    console.error('Error en countAvailabilityDates:', err);
+    return {};
   }
 }

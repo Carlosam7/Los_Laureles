@@ -1,18 +1,45 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { Calendar } from 'primereact/calendar';
 import { MultiSelect } from 'primereact/multiselect';
 import { Dropdown } from 'primereact/dropdown';
 
-import { fetchFilterRooms } from '../../controllers/services/fetchFilterRooms';
-import { CardReserveIncrement } from './CardReserveIncrement';
+export const SearchBarComplete = ({ initialDates = null, initialSelectedCities = [], initialPriceRange = null }) => {
+  const [dates, setDates] = useState(initialDates);
+  const [selectedCities, setSelectedCities] = useState(initialSelectedCities);
+  const [selectedPriceRange, setSelectedPriceRange] = useState(initialPriceRange);
 
-export const SearchBarComplete = () => {
-  const [dates, setDates] = useState(null);
-  const [selectedCities, setSelectedCities] = useState([]);
-  const [selectedPriceRange, setSelectedPriceRange] = useState(null);
-  const [filteredRooms, setFilteredRooms] = useState([]);
-  const [availabilityMap, setAvailabilityMap] = useState({});
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  // Refs para controlar que solo inicialicemos una vez
+  const isInitialDatesSet = useRef(false);
+  const isInitialCitiesSet = useRef(false);
+  const isInitialPriceRangeSet = useRef(false);
+
+  useEffect(() => {
+    if (!isInitialDatesSet.current) {
+      setDates(initialDates);
+      isInitialDatesSet.current = true;
+    }
+  }, [initialDates]);
+
+  useEffect(() => {
+    if (!isInitialCitiesSet.current) {
+      setSelectedCities(initialSelectedCities);
+      isInitialCitiesSet.current = true;
+    }
+  }, [initialSelectedCities]);
+
+  useEffect(() => {
+    if (!isInitialPriceRangeSet.current) {
+      setSelectedPriceRange(initialPriceRange);
+      isInitialPriceRangeSet.current = true;
+    }
+  }, [initialPriceRange]);
+
+  // Fechas mínimas y máximas para el calendario
+  const today = new Date();
+  const maxDate = new Date(today.getFullYear() + 1, 11, 31);
 
   const cities = [
     { name: 'Estándar Tropical', code: 'ST' },
@@ -24,63 +51,35 @@ export const SearchBarComplete = () => {
   ];
 
   const priceRanges = [
-    { label: '$100.000 - $200.000', value: 'Rango1' },
-    { label: '$200.000 - $300.000', value: 'Rango2' },
-    { label: '$300.000 - $400.000', value: 'Rango3' },
-    { label: '$400.000 - $500.000', value: 'Rango4' }
+    { label: 'Todos los rangos', value: null },
+    { label: '$200,000 - $400,000', value: 'Rango1' },
+    { label: '$400,000 - $600,000', value: 'Rango2' },
+    { label: '$600,000 - $800,000', value: 'Rango3' },
+    { label: '$800,000 - $1,000,000', value: 'Rango4' },
+    { label: '$1,000,000 - $1,200,000', value: 'Rango5' },
+    { label: '$1,200,000 - $1,400,000', value: 'Rango6' },
+    { label: '$1,400,000 - $1,500,000', value: 'Rango7' },
   ];
 
-  //const traducirTipo = (tipo) => {
-  //switch (tipo) {
-  //case 'Standard': return 'Estándar Tropical';
-  //case 'Family': return 'Familiar Natural';
-  //case 'Presidential': return 'Presidencial Elegance';
-  //case 'Suite Royal': return 'Suite Royal Relax';
-  //case 'King': return 'King Comfort';
-  //case 'Queen': return 'Queen Serenity';
-  //default: return tipo;
-  //}
-  //};
+  const handleSearch = () => {
+    if (!dates || dates.length !== 2) {
+      alert("Por favor selecciona un rango de fechas válido");
+      return;
+    }
 
-const handleSearch = async () => {
-  if (!dates || dates.length !== 2) {
-    alert("Por favor selecciona un rango de fechas válido");
-    return;
-  }
+    const formatDate = (date) => {
+      const d = new Date(date);
+      d.setHours(12, 0, 0, 0); // evitar desfase por zona horaria
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    };
 
-  setLoading(true);
+    const startDate = formatDate(dates[0]);
+    const endDate = formatDate(dates[1]);
+    const typesParam = selectedCities.map(c => c.code).join(',');
+    const priceParam = selectedPriceRange || '';
 
-  const formatDate = (date) => {
-    const d = new Date(date);
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    navigate(`/reservation?start=${startDate}&end=${endDate}&types=${typesParam}&price=${priceParam}`);
   };
-
-  const startDate = formatDate(dates[0]);
-  const endDate = formatDate(dates[1]);
-
-  try {
-    // 1. Obtener habitaciones filtradas según fechas, tipo y precio (como haces)
-    const roomsFiltered = await fetchFilterRooms({
-      startDate,
-      endDate,
-      selectedTypes: selectedCities.map(c => c.name),
-      priceRange: selectedPriceRange
-    });
-
-    // 2. Obtener disponibilidad (igual que en RoomListAvailability)
-    const availabilityMap = await countAvailabilityDates(startDate, endDate);
-
-    setAvailabilityMap(availabilityMap);
-    setFilteredRooms(roomsFiltered);
-
-  } catch (error) {
-    console.error("Error al buscar habitaciones:", error);
-    alert("Error al buscar habitaciones. Revisa la consola.");
-  }
-
-  setLoading(false);
-};
-
 
   return (
     <div className="flex flex-col items-center justify-center mb-4">
@@ -90,7 +89,7 @@ const handleSearch = async () => {
         <p className="mt-4 text-sm text-white text-center">Entra en un mundo de naturaleza, confort y atención personalizada en nuestros espacios</p>
       </div>
 
-      <div className="flex max-w-[1200px] justify-center space-y-2 md:flex-row md:space-y-0 md:space-x-2 bg-gray-100 p-3 rounded-lg shadow-md mt-4">
+      <div className="flex flex-col mx-auto w-full space-y-2 max-w-screen-xl md:flex-row md:space-y-0 md:space-x-4 bg-gray-100 p-3 rounded-lg shadow-md mt-4 min-w-0">
         <Calendar
           value={dates}
           onChange={(e) => setDates(e.value)}
@@ -100,6 +99,10 @@ const handleSearch = async () => {
           className="w-full"
           placeholder="Elige tus fechas"
           showIcon
+          minDate={today}
+          maxDate={maxDate}
+          yearNavigator
+          yearRange={`${today.getFullYear()}:${maxDate.getFullYear()}`}
         />
 
         <MultiSelect
@@ -123,35 +126,15 @@ const handleSearch = async () => {
         />
 
         <button
-          className="flex items-center justify-center md:justify-between w-full px-4 py-3 text-black bg-[#FDC800] rounded-md md:w-[40%]"
+          className="flex items-center justify-center md:justify-between w-full md:w-2/5 px-4 py-3 text-black bg-[#FDC800] rounded-md"
           onClick={handleSearch}
-          disabled={loading}
         >
-          <span className="font-medium">{loading ? "Buscando..." : "Buscar"}</span>
-          <span className={`invisible md:visible pi pi-arrow-right`} style={{ fontSize: '1rem' }}></span>
+          <span className="font-medium">Buscar</span>
+          <span className="invisible md:visible pi pi-arrow-right" style={{ fontSize: '1rem' }}></span>
         </button>
-      </div>
-
-      <div className="mt-6 w-full max-w-[1200px]">
-        {filteredRooms.length > 0 ? (
-          filteredRooms
-            .filter(room => room.available_count > 0)
-            .map((room, index) => (
-              <CardReserveIncrement
-                key={index}
-                name={room.type}
-                price={room.price_day}
-                capacity={room.capacity}
-                image={room.images?.[0]?.Url || ''}  // O usa 'url' según como venga
-                description={'Aquí va la descripción'}
-                availability={room.available_count}
-              />
-            ))
-        ) : (
-          <p className="text-center mt-4">No hay habitaciones disponibles en este rango de fechas.</p>
-        )}
       </div>
     </div>
   );
 };
+
 
