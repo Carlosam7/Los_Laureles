@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import '../../styles/login.css'
 import supabase from '../../utils/supabase';
+import { toast } from 'sonner';
 
 export const Login = () => {
     const [activeButton, setActiveButton] = useState('signIn');
@@ -19,13 +20,17 @@ export const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        try {
+        const signPromise = async () => {
+            if (!email || !password) throw new Error('Todos los campos son requeridos')
+            if (!email.includes('@') || !email.includes('.')) throw new Error('Introduce un email válido')
+            if (password.length < 8) throw new Error('La contraseña debe tener al menos 8 caracteres')
+
             if (activeButton === 'signIn') {
                 let { data, error } = await supabase.auth.signInWithPassword({
                     email,
                     password
                 })
-                if (error) throw new Error(error)
+                if (error) throw new Error('Email o contraseña inválidos')
                 console.log(data)
             } else {
                 let { data, error } = await supabase.auth.signUp({
@@ -34,29 +39,25 @@ export const Login = () => {
                 })
                 if (error) throw new Error(error)
                 else if (data.user.identities.length === 0) {
-                    throw new Error('An account with this email already exists. Try to log in or sign up with another email.')
+                    throw new Error('Parece que ya existe una cuenta con este email. Si eres tú, trata de iniciar sesión')
                 }
                 console.log(data)
             }
 
             setEmail('')
             setPassword('')
-        } catch (error) {
-            console.error(error)
-            if (error.message.includes('Invalid login credentials')) {
-                alert('Invalid email or password.')
-                return
-            } else if (error.message.includes('missing email or phone')) {
-                alert('todos los campos son requeridos')
-                return
-            }
-            alert(error.message)
         }
+
+        toast.promise(signPromise(), {
+            loading: 'Iniciando sesión...',
+            success: '¡Bienvenido!',
+            error: (err) => { console.error(err); return err.message }
+        })
     }
 
     return (
         <main className='login-bg'>
-            <form onSubmit={handleSubmit} className='login-form'>
+            <form onSubmit={handleSubmit} noValidate className='login-form'>
                 <header className='flex flex-col items-center'>
                     <img src="public\los_laureles_brand-21.png" alt="" width={180} />
                     <h2 className='text-2xl font-bold text-gray-800 text-centermt-5 mt-5'>¡Bienvenido!</h2>

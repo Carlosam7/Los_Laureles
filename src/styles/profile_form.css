@@ -1,12 +1,8 @@
-.profile{
+.profile {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #fff;
-  position: relative;
-  height: 100dvh;
-  color: #222;
 }
 
 .profile header {
@@ -31,11 +27,10 @@
 
 .profile h1 {
   font-size: xx-large;
-  margin-top: 10rem;
   margin-bottom: 5rem;
 }
 
-.profile ul{
+.profile ul {
   display: flex;
   gap: 2rem;
 }
@@ -91,7 +86,7 @@
   cursor: pointer;
 }
 
-.profile footer {
+.profile-footer {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -105,28 +100,31 @@
   gap: 1rem;
 }
 
-.profile footer section {
+.profile-footer section {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
 }
 
-.profile footer section ul{
+.profile-footer section ul {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.profile footer input {
+.profile-footer input {
   padding: .25rem;
+  border: 1px solid #EFEFEF;
   border-radius: 1rem;
+  outline: none;
 }
-.profile footer input::placeholder {
+
+.profile-footer input::placeholder {
   color: #fff;
 }
 
-.profile footer button {
+.profile-footer button {
   margin-left: 0.5rem;
   background-color: #fff;
   color: #222;
@@ -135,20 +133,22 @@
   padding: .5rem;
 }
 
-@media screen and (width <= 1010px) {
-  .profile footer img {
+.pf-input-disabled {
+  background-color: #EFEFEF;
+  color: #ACACAC;
+  cursor: not-allowed;
+}
+
+@media screen and (width <=1010px) {
+  .profile-footer img {
     object-fit: contain;
     width: 150px;
     font-size: smaller;
   }
 }
 
-@media screen and (width <= 570px) {
+@media screen and (width <=570px) {
   .pf-input-section {
     flex-direction: column;
-  }
-  
-  .profile h1 {
-    padding-top: 20rem;
   }
 }
