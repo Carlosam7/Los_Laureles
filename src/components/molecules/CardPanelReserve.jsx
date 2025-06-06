@@ -17,6 +17,7 @@ export const CardPanelReserve = ({ idType, type, startDate, endDate, price }) =>
     const [quantity, setQuantity] = useState(1);
 
     //console.log(type<)
+
     const updateQuantity = (change) => {
         setQuantity(prev => Math.max(0, prev + change));
     };
@@ -122,6 +123,36 @@ export const CardPanelReserve = ({ idType, type, startDate, endDate, price }) =>
                                 className="w-7 h-7 rounded-full border-2 border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors"
                                 onClick={() => updateQuantity(1)}
                                 disabled = { quantity === availables.length}
+                            >
+                                {/* Icono más usando SVG */}
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M12 5v14" />
+                                    <path d="M5 12h14" />
+                                </svg>
+                            </button>
+                        </div>
+                        {/* Controles de cantidad */}
+                        <div className="flex col-span-2 justify-end items-center rounded-lg">
+
+                            <button
+                                className="w-7 h-7 rounded-full border-2 border-gray-300 flex items-center justify-center hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                onClick={() => updateQuantity(-1)}
+                                disabled={quantity === 0}
+                            >
+                                {/* Icono menos usando SVG */}
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M5 12h14" />
+                                </svg>
+                            </button>
+
+                            <span className="text-xl font-semibold w-12 text-center">
+                                {quantity}
+                            </span>
+
+                            <button
+                                className="w-7 h-7 rounded-full border-2 border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors"
+                                onClick={() => updateQuantity(1)}
+                                // disabled={quantity === availability} // Aquí puedes definir una variable o prop para la cantidad máxima disponible
                             >
                                 {/* Icono más usando SVG */}
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
