@@ -1,14 +1,22 @@
+import { useEffect, useState } from 'react';
+import { useContext } from 'react';
+
+import { AuthContext } from '../../context/AuthContext';
 import { Calendar } from 'primereact/calendar';
 import { FloatLabel } from 'primereact/floatlabel';
-import { useEffect, useState } from 'react';
-import { createReserve } from '../../controllers/services/createReserveClient';
+import { availability, createReserve } from '../../controllers/Client';
 
-export const CardPanelReserve = ({ startDate, endDate, price }) => {
+
+export const CardPanelReserve = ({ idType, type, startDate, endDate, price }) => {
+    const { auth } = useContext(AuthContext);
+    const user = auth?.user;
     const [startD, setStartD] = useState(startDate);
-    const [endD, setEndD] = useState(endDate)
+    const [endD, setEndD] = useState(endDate);
     const [days, setDays] = useState(0);
-    const [quantity, setQuantity] = useState(0);
+    const [availables, setAvailables] = useState([]);
+    const [quantity, setQuantity] = useState(1);
 
+    //console.log(type<)
     const updateQuantity = (change) => {
         setQuantity(prev => Math.max(0, prev + change));
     };
@@ -20,9 +28,32 @@ export const CardPanelReserve = ({ startDate, endDate, price }) => {
         return `${year}-${month}-${day}`
     }
     useEffect(() => {
-        const days = (endD - startD) / (1000 * 60 * 60 * 24)
-        setDays(days)
+        const updateData = async () => {
+            if (startD && endD) {
+            const days = (endD - startD) / (1000 * 60 * 60 * 24)
+            setDays(days);
+            await getRoomsAvailable();
+         };
+        }
+        updateData();
     }, [startD, endD])
+
+    const getRoomsAvailable = async () => {
+        try {
+            const a = await availability(type, parsearDate(startD), parsearDate(endD));
+            console.log('Habitaciones disponibles:', a.idRooms);
+            setAvailables(a.idRooms || []);
+        } catch (err) {
+            console.error('Error obteniendo habitaciones disponibles', err);
+            setAvailables([]);
+        }
+    };
+
+    console.log('fdfd', user.id)
+
+    // console.log(quantity)
+
+    // console.log('Slice', availables.slice(0, quantity))
 
     return(
         <main className='w-[350px] h-[450px] md:w-[450px] md:h-[500px] shadow-[0_4px_30px_rgba(0,0,0,0.1)] rounded-2xl bg-white flex items-center justify-center'>
@@ -42,7 +73,8 @@ export const CardPanelReserve = ({ startDate, endDate, price }) => {
                             <Calendar inputId="startDay" 
                                 value={startD} 
                                 onChange={(e) => 
-                                    setStartD(e.value)
+                                    {setStartD(e.value);
+                                    getRoomsAvailable()}
                                 }
                                 
                                 className='w-full h-full' />
@@ -52,8 +84,11 @@ export const CardPanelReserve = ({ startDate, endDate, price }) => {
                         <FloatLabel className='w-full h-[60px]'>
                             <Calendar inputId="endDay" 
                                 value={endD} 
-                                onChange={(e) => setEndD(e.value)
-                                } className='w-full h-full' />
+                                onChange={(e) => 
+                                    {setEndD(e.value); 
+                                    getRoomsAvailable()}
+                                } 
+                                className='w-full h-full' />
                             <label htmlFor="endDay">Fecha fin</label>
                         </FloatLabel>
 
@@ -62,7 +97,7 @@ export const CardPanelReserve = ({ startDate, endDate, price }) => {
                                 Total
                             </span>
                             <span className='flex justify-end w-[50%] right-0 text-[20px] font-medium text-gray-700'>
-                                $ {(days < 0) ? 'NaN' : days * price}
+                                $ {(days < 0) ? 'NaN' : days * price * quantity}
                             </span>
                         </div>
                         {/* Controles de cantidad */}
@@ -86,7 +121,7 @@ export const CardPanelReserve = ({ startDate, endDate, price }) => {
                             <button
                                 className="w-7 h-7 rounded-full border-2 border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors"
                                 onClick={() => updateQuantity(1)}
-                                // disabled={quantity === availability} // Aquí puedes definir una variable o prop para la cantidad máxima disponible
+                                disabled = { quantity === availables.length}
                             >
                                 {/* Icono más usando SVG */}
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -98,10 +133,17 @@ export const CardPanelReserve = ({ startDate, endDate, price }) => {
                     
                     </section>
 
-                    <button onClick={() =>
-                        createReserve('1', parsearDate(startD), parsearDate(endD))
+                    <button onClick={() => {
+                        if (startD > endD){
+                            console.log('NOOOOOO')
+                        }else{
+                            console.log('Reservando...')
+                            createReserve(user.id, startD, endD, availables.slice(0, quantity))
+                            console.log('Completado')
+                        }
+                    }
                     } 
-                    className='w-full h-[60px] bg-amber-400 rounded-lg text-black font-bold hover:bg-amber-500 transition-all duration-300'>
+                    className='w-full h-[60px] bg-amber-400 rounded-lg text-black font-bold hover:bg-amber-500 transition-all duration-300 cursor-pointer'>
                         Reservar
                     </button>
 

@@ -1,28 +1,17 @@
 import supabase from "../../utils/supabase";
 
-export const createReserve = async (codeGuest, startDate, endDate) => {
+export const createReserveWithRooms = async (codeGuest, startDate, endDate, listIdRooms) => {
     try {
-
-        const guests = await supabase.from('guest').select('code_guest')
-        const codes = guests.data
-        const code1 = codes[0]
-
-
-
-        console.log(code1.code_guest)
-        console.log(startDate)
-        console.log(endDate)
-        const { error } = await supabase.from('reserve').insert({ 
-            code_guest: '6f1483a5-1ec0-4141-8a09-715a21028ac6', start_date: startDate, end_date: endDate })
-        if (error) {
-            console.log('error', error)
-            return error;
-        } else {
-            console.log('sfksnkfsbkfb')
-            return true;
+        if (!codeGuest || !startDate || !endDate || !Array.isArray(listIdRooms)) {
+            throw new Error("Faltan parámetros obligatorios o la lista de habitaciones está vacía.");
         }
-
-    } catch {
+        await supabase.rpc('create_reserve_with_rooms', {
+            p_code_guest:   codeGuest,
+            p_start_date:   startDate,
+            p_end_date:     endDate,
+            p_rooms:        listIdRooms
+        });
+    } catch (error) {
         console.error('Error fetching room types:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
