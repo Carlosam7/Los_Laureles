@@ -13,15 +13,14 @@ export const PageRoom = () => {
 
     useEffect(() => {
         const fetchData = async() => {
+            // console.log(room)
             const data = await getRoom(idType);
             setRoom(data);
-            console.log(room)
+            // console.log(room)
         };
         fetchData();
     }, [idType])
-
     if (!room) return <p>Cargando información...</p>;
-    
     return (
         <main className="flex flex-col items-center justify-start w-full min-h-screen bg-white p-5 md:p-10 min-w-[450px] space-y-5"> 
             <NavBar/>
@@ -102,7 +101,7 @@ export const PageRoom = () => {
                         </section>
                     </article>
                 
-                    <CardPanelReserve price={room.priceDay}/>
+                    <CardPanelReserve type={room.Type} price={room.priceDay}/>
                 </section>
             </main>
         </main>
