@@ -136,7 +136,7 @@ export function Profile() {
       </div>
       <footer className='profile-footer'>
         <section>
-          <img src="https://faowaewkokjiovwtbrbn.supabase.co/storage/v1/object/public/utils//los_laureles_brand-02.png" alt="" width={150} />
+          <img src="public\los_laureles_brand-02.png" alt="" width={150} />
 
           <ul>
             <li><strong>Contacto</strong></li>

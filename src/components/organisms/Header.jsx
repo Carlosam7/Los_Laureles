@@ -1,5 +1,5 @@
 import { NavBar } from "../atoms/NavBar";
-import { Carrousel } from "../molecules/Carrousel";
+import { Carrousel } from "../molecules/carrousel";
 
 export const Header = () => {
     return (

@@ -68,7 +68,7 @@ export const Login = () => {
             <form onSubmit={handleSubmit} noValidate className='login-form'>
 
                 <header className='flex flex-col items-center'>
-                    <img src="https://faowaewkokjiovwtbrbn.supabase.co/storage/v1/object/public/utils//los_laureles_brand-21.png" alt="" width={180} />
+                    <img src="public\los_laureles_brand-21.png" alt="" width={180} />
                     <h2 className='text-2xl font-bold text-gray-800 text-centermt-5 mt-5'>¡Bienvenido!</h2>
                     <p className='text-gray-600 text-[12px] text-center'>¡Hola! Por favor, ingresa tus datos</p>
                 </header>
