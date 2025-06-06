@@ -9,12 +9,14 @@ import { toast } from 'sonner'
 import { NavBar } from '../../components/atoms/NavBar'
 
 export function Profile() {
+
   const { auth, setAuth } = useContext(AuthContext)
   const [name, setName] = useState('')
   const [lastName, setLastName] = useState('')
   const [identification, setIdentification] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
+
 
   const navigate = useNavigate()
 
@@ -31,6 +33,7 @@ export function Profile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
 
     console.log(name, lastName, identification, phone)
     if (!name || !lastName || !identification || !phone) {
@@ -82,9 +85,18 @@ export function Profile() {
         return err.message
       }
     })
+
+  }
+
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut()
+    if (error) {
+      console.error('Error signing out:', error)
+    }
   }
 
   return (
+
     <>
       <div className="'flex flex-col items-center justify-start w-full min-h-screen bg-white p-5 md:p-10 min-w-[450px] space-y-5">
         <NavBar />
@@ -120,6 +132,7 @@ export function Profile() {
       <footer className='profile-footer'>
         <section>
           <img src="public\los_laureles_brand-02.png" alt="" width={150} />
+
           <ul>
             <li><strong>Contacto</strong></li>
             <li>Puerto colombia</li>

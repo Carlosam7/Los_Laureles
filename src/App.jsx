@@ -1,9 +1,9 @@
-import supabase from './utils/supabase';
 import { Login } from './pages/auth/Login';
 import { Page404 } from './pages/page404';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 import { Profile } from './pages/client/profile';
+
 import { Home } from './pages/client/home';
 import { AuthContext } from './context/AuthContext';
 import { Toaster } from 'sonner';
@@ -51,6 +51,7 @@ function App() {
     })
   }, [])
 
+
   return (
     <>
       <Toaster expand={true} richColors toastOptions={{
@@ -59,15 +60,17 @@ function App() {
         }
       }} />
       <Routes>
+
         <Route path='/login' element={<Login />} />
         <Route path='/' element={<Home />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/admin' element={<RoomForm />} />
         <Route path='*' element={<Page404 />} />
         <Route path='/room/:idType' element={<PageRoom />}></Route>
+
       </Routes>
     </>
-  )
+  );
 }
 
 export default App

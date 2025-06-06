@@ -20,6 +20,7 @@ export const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
+
         const signPromise = async () => {
             if (!email || !password) throw new Error('Todos los campos son requeridos')
             if (!email.includes('@') || !email.includes('.')) throw new Error('Introduce un email válido')
@@ -30,7 +31,9 @@ export const Login = () => {
                     email,
                     password
                 })
+
                 if (error) throw new Error('Email o contraseña inválidos')
+
                 console.log(data)
             } else {
                 let { data, error } = await supabase.auth.signUp({
@@ -39,13 +42,16 @@ export const Login = () => {
                 })
                 if (error) throw new Error(error)
                 else if (data.user.identities.length === 0) {
+
                     throw new Error('Parece que ya existe una cuenta con este email. Si eres tú, trata de iniciar sesión')
+
                 }
                 console.log(data)
             }
 
             setEmail('')
             setPassword('')
+
         }
 
         toast.promise(signPromise(), {
@@ -53,11 +59,14 @@ export const Login = () => {
             success: '¡Bienvenido!',
             error: (err) => { console.error(err); return err.message }
         })
+
     }
 
     return (
         <main className='login-bg'>
+
             <form onSubmit={handleSubmit} noValidate className='login-form'>
+
                 <header className='flex flex-col items-center'>
                     <img src="public\los_laureles_brand-21.png" alt="" width={180} />
                     <h2 className='text-2xl font-bold text-gray-800 text-centermt-5 mt-5'>¡Bienvenido!</h2>
