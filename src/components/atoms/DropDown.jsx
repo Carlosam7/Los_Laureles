@@ -60,7 +60,7 @@ export const DropDown = () => {
                         onClick={reserveManager}
                     >
                         <p className="text-slate-800 font-medium ml-2">
-                            Mis reservas
+                            Reservas
                         </p>
                     </li>
                     <li

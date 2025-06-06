@@ -12,6 +12,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.49.8",
     "@tailwindcss/vite": "^4.1.7",
+    "jspdf": "^3.0.1",
     "primeicons": "^7.0.0",
     "primereact": "^10.9.5",
     "react": "^19.1.0",

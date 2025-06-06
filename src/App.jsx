@@ -12,6 +12,7 @@ import { PageRoom } from './pages/client/PageRoom';
 import supabase from './utils/supabase';
 import { Reservation } from './pages/client/Reservation';
 import { MyReserves } from './pages/admin/ReservesManager';
+import { AdminReservations } from './pages/admin/AdminReservations';
 
 
 function App() {
@@ -92,6 +93,7 @@ function App() {
         <Route path='/room/:idType' element={<PageRoom />}></Route>
         <Route path='/reservation' element={< Reservation />}></Route>
         <Route path='/myreserves' element={< MyReserves />}></Route>
+        <Route path='/admin/rsm' element={< AdminReservations />}></Route>
 
       </Routes>
     </>
