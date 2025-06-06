@@ -5,6 +5,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { Calendar } from 'primereact/calendar';
 import { FloatLabel } from 'primereact/floatlabel';
 import { availability, createReserve } from '../../controllers/Client';
+import { toast } from 'sonner';
 
 
 export const CardPanelReserve = ({ type, startDate, endDate, price }) => {
@@ -41,6 +42,7 @@ export const CardPanelReserve = ({ type, startDate, endDate, price }) => {
     const getRoomsAvailable = async () => {
         try {
             const a = await availability(type, parsearDate(startD), parsearDate(endD));
+            console.log('AAAAAAAAAAAAAAAAAAAAAAAA', a)
             console.log('Habitaciones disponibles:', a.idRooms);
             setAvailables(a.idRooms || []);
         } catch (err) {
@@ -106,7 +108,7 @@ export const CardPanelReserve = ({ type, startDate, endDate, price }) => {
                             <button
                                 className="w-7 h-7 rounded-full border-2 border-gray-300 flex items-center justify-center hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                                 onClick={() => updateQuantity(-1)}
-                                disabled={quantity === 0}
+                                disabled={quantity === 1}
                             >
                                 {/* Icono menos usando SVG */}
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -121,7 +123,7 @@ export const CardPanelReserve = ({ type, startDate, endDate, price }) => {
                             <button
                                 className="w-7 h-7 rounded-full border-2 border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors"
                                 onClick={() => updateQuantity(1)}
-                                disabled={quantity === availables.length}
+                                disabled={quantity === availables.length || availables.length === 0}
                             >
                                 {/* Icono más usando SVG */}
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -138,7 +140,11 @@ export const CardPanelReserve = ({ type, startDate, endDate, price }) => {
                             console.log('NOOOOOO')
                         } else {
                             console.log('Reservando...')
-                            createReserve(user.code, startD, endD, availables.slice(0, quantity))
+                            toast.promise(createReserve(user.code, startD, endD, availables.slice(0, quantity), type), {
+                                loading: 'Rservando...',
+                                success: 'Reserva realizada con exito',
+                                error: err => err.message
+                            })
                             console.log('Completado')
                         }
                     }

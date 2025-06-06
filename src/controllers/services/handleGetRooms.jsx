@@ -5,8 +5,8 @@ export const handleGetRooms = async (req, res) => {
     try {
         const { data } = await supabase.from('view_rooms').select();
         const rooms = data.map(room => {
-                    return new Room(room.id_room, room.id_type, room.type, room.price_day, room.capacity, room.description, room.size, room.number_bathrooms, room.number_rooms, room.number_beds);
-            }    
+            return new Room(room.id_room, room.id_type, room.type, room.price_day, room.capacity, room.description, room.size, room.number_bathrooms, room.number_rooms, room.number_beds);
+        }
         )
         // let room_types = []
         // let value = false;
@@ -23,7 +23,7 @@ export const handleGetRooms = async (req, res) => {
         //     }else{
         //         value = false;
         //     }
-            
+
         // }
         return rooms;
     } catch (error) {

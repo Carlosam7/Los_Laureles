@@ -1,7 +1,6 @@
 import { handleGetTypesRooms } from "./services/handleGetTypesRooms";
 import { handleGetImages } from "./services/handleGetImages";
 import { consultByDate } from "./services/consultByDate";
-import { numberAvailableRoomByTypeDate } from "./services/numberAvailableRoomByTypeDate";
 import { createReserveWithRooms } from "./services/createReserveClient";
 
 export const showRooms = async () => {
@@ -10,7 +9,7 @@ export const showRooms = async () => {
         const images = await handleGetImages();
 
         if (!typeRooms.length) throw new Error("No se encontraron tipos de habitaciones");
-       // if (!images.length) throw new Error("No se encontraron imágenes");
+        // if (!images.length) throw new Error("No se encontraron imágenes");
 
         //Agregar las imágenes a cada tipo de habitación
         typeRooms.map(room => {
@@ -20,46 +19,54 @@ export const showRooms = async () => {
 
         return typeRooms;
 
-    }catch (error) {
+    } catch (error) {
         console.error('Error fetching rooms or types:', error);
         [];
     }
 }
 
 export const getRoom = async (idType, listRoom = null) => {
-    if(listRoom===null){
-    
+    if (listRoom === null) {
+
         const rooms = await showRooms();
         const r = rooms.find(room => room.idType == idType);
         return r;
-    
+
     } else {
 
         const r = listRoom.find(room => room.idType == idType);
         return r;
 
-    }  
+    }
 };
 
 export const availability = async (type, sDate, eDate) => {
     const data = await consultByDate(sDate, eDate)
-    if (data.find(r => r.type == type)){
+
+    console.log('DATA', data)
+    console.log('TYPE', type)
+
+    if (data.find(r => r.type == type)) {
         const rooms = data.filter(r => r.type == type)
-        const idRooms = rooms.map(room => 
+        const idRooms = rooms.map(room =>
             room.id_room
         )
 
         return { available: true, idRooms: idRooms, numberAvailable: idRooms.length }
-    }else{
+    } else {
         return { available: false, idRooms: null, numberAvailable: null }
     }
 }
 
-export const createReserve = async (code, sDate, eDate, listRooms) => {
+export const createReserve = async (code, sDate, eDate, listRooms, type) => {
+    const av = await availability(type, sDate, eDate)
+
+    if (!av.available) throw new Error('No hay habitaciones disponibles para estas fechas.')
+
     try {
         await createReserveWithRooms(code, sDate, eDate, listRooms)
     } catch (error) {
         console.log('Error', error)
-        return error
+        throw error
     }
 }

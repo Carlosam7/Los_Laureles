@@ -34,12 +34,6 @@ export function Profile() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    console.log(name, lastName, identification, phone)
-    if (!name || !lastName || !identification || !phone) {
-      alert('Por favor, completa todos los campos.')
-      return
-    }
-
     const userData = {
       name,
       last_name: lastName,
@@ -57,6 +51,7 @@ export function Profile() {
         throw new Error('Por favor completa todos los campos')
       }
 
+      console.log(isNaN('1241'))
       if (identification && isNaN(identification)) throw new Error('Ingresa una identificación válida')
 
       const { error: userError } = await supabase.from('user').update({
