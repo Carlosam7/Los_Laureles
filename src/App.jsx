@@ -9,6 +9,8 @@ import { AuthContext } from './context/AuthContext';
 import { Toaster } from 'sonner';
 import { RoomForm } from './pages/admin/RoomForm';
 import { PageRoom } from './pages/client/PageRoom';
+import supabase from './utils/supabase';
+import { Reservation } from './pages/client/Reservation';
 
 
 function App() {
@@ -67,6 +69,7 @@ function App() {
         <Route path='/admin' element={<RoomForm />} />
         <Route path='*' element={<Page404 />} />
         <Route path='/room/:idType' element={<PageRoom />}></Route>
+        <Route path='/reservation' element={< Reservation />}></Route>
 
       </Routes>
     </>

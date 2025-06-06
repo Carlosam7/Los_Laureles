@@ -112,7 +112,7 @@ export const Body = () => {
                                 type={room.type}
                                 price={room.priceDay}
                                 capacity={room.capacity}
-                                image={room.images[0].Url} // Assuming images is an array of image URLs
+                                image={room.images?.[0]?.Url || 'fallback.png'} // Assuming images is an array of image URLs
                             />
                         )
                         )

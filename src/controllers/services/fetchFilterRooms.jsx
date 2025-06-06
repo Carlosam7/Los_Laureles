@@ -3,7 +3,7 @@ import supabase from '../../utils/supabase.js';
 
 // Convierte etiqueta rango a límites numéricos
 const getPriceBounds = (range) => {
-  switch(range) {
+  switch (range) {
     case 'Rango1': return [200000, 400000];
     case 'Rango2': return [400000, 600000];
     case 'Rango3': return [600000, 800000];
@@ -69,7 +69,3 @@ export const fetchFilterRooms = async ({ startDate, endDate, selectedTypes = [],
 
   return roomsWithAvailability;
 };
-
-
-
-
